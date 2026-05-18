@@ -20,6 +20,9 @@ class SlidingUpPanel extends StatefulWidget {
   /// If your page have an AppBar set this parametere to true
   final bool pageHaveAppBar;
 
+  /// Supplementary top space on top of the body
+  final double supplementTopSpacing;
+
   /// The Widget that slides into view. When the
   /// panel is collapsed and if [collapsed] is null,
   /// then top portion of this Widget will be displayed;
@@ -188,6 +191,7 @@ class SlidingUpPanel extends StatefulWidget {
     this.onPanelClosed,
     this.parallaxEnabled = false,
     this.pageHaveAppBar = true,
+    this.supplementTopSpacing = 0.0,
     this.parallaxOffset = 0.1,
     this.isDraggable = true,
     this.slideDirection = SlideDirection.UP,
@@ -212,6 +216,11 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
   VelocityTracker _vt = new VelocityTracker.withKind(PointerDeviceKind.touch);
 
   bool _isPanelVisible = true;
+
+  double get bodyHeight => widget.pageHaveAppBar
+    ? MediaQuery.of(context).size.height - supplementTopSpacing - 
+          Scaffold.of(context).appBarMaxHeight!.toDouble()
+    : MediaQuery.of(context).size.height - supplementTopSpacing;
 
   @override
   void initState() {
@@ -262,10 +271,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                   );
                 },
                 child: Container(
-                  height: widget.pageHaveAppBar
-                      ? MediaQuery.of(context).size.height -
-                            Scaffold.of(context).appBarMaxHeight!.toDouble()
-                      : MediaQuery.of(context).size.height,
+                  height: bodyHeight,
                   width: MediaQuery.of(context).size.width,
                   child: widget.body,
                 ),
