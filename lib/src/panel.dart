@@ -218,9 +218,10 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
   bool _isPanelVisible = true;
 
   double get bodyHeight => widget.pageHaveAppBar
-    ? MediaQuery.of(context).size.height - supplementTopSpacing - 
+      ? MediaQuery.of(context).size.height -
+          widget.supplementTopSpacing -
           Scaffold.of(context).appBarMaxHeight!.toDouble()
-    : MediaQuery.of(context).size.height - supplementTopSpacing;
+      : MediaQuery.of(context).size.height - widget.supplementTopSpacing;
 
   @override
   void initState() {
