@@ -266,14 +266,14 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
             ? AnimatedBuilder(
                 animation: _ac,
                 builder: (context, child) {
-                  return Positioned(
+                  return Positioned.fill(
                     top: widget.parallaxEnabled ? _getParallax() : 0.0,
                     child: child ?? SizedBox(),
                   );
                 },
-                child: Container(
+                child: SizedBox(
                   height: bodyHeight,
-                  width: MediaQuery.of(context).size.width,
+                  width: double.infinity,
                   child: widget.body,
                 ),
               )
@@ -299,8 +299,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                   animation: _ac,
                   builder: (context, _) {
                     return Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
+                      height: double.infinity,
+                      width: double.infinity,
 
                       //set color to null so that touch events pass through
                       //to the body when the panel is closed, otherwise,
@@ -342,21 +342,13 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                   child: Stack(
                     children: <Widget>[
                       //open panel
-                      Positioned(
+                      Positioned.fill(
                         top: widget.slideDirection == SlideDirection.UP
                             ? 0.0
                             : null,
                         bottom: widget.slideDirection == SlideDirection.DOWN
                             ? 0.0
                             : null,
-                        width:
-                            MediaQuery.of(context).size.width -
-                            (widget.margin != null
-                                ? widget.margin!.horizontal
-                                : 0) -
-                            (widget.padding != null
-                                ? widget.padding!.horizontal
-                                : 0),
                         child: Container(
                           height: widget.maxHeight,
                           child: widget.panel != null
@@ -394,21 +386,13 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                           : Container(),
 
                       // collapsed panel
-                      Positioned(
+                      Positioned.fill(
                         top: widget.slideDirection == SlideDirection.UP
                             ? 0.0
                             : null,
                         bottom: widget.slideDirection == SlideDirection.DOWN
                             ? 0.0
                             : null,
-                        width:
-                            MediaQuery.of(context).size.width -
-                            (widget.margin != null
-                                ? widget.margin!.horizontal
-                                : 0) -
-                            (widget.padding != null
-                                ? widget.padding!.horizontal
-                                : 0),
                         child: Container(
                           height: widget.minHeight,
                           child: widget.collapsed == null
