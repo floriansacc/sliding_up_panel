@@ -1,3 +1,10 @@
+## [2.1.1] - [October 30, 2026]
+
+### Fixes
+
+- Deprecation warnings for `pageHaveAppBar` and `supplementTopSpacing` now also show when passing them to the `SlidingUpPanel` constructor, not only when reading the fields
+- Deprecation messages now follow the Flutter format and state the version they were deprecated after (v2.1.0)
+
 ## [2.1.0] - [October 30, 2026]
 
 ### Changes

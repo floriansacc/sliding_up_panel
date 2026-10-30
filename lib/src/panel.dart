@@ -20,16 +20,16 @@ class SlidingUpPanel extends StatefulWidget {
   /// No longer has any effect: the [body] fills the space given to the
   /// [SlidingUpPanel], so an AppBar above it is already accounted for.
   @Deprecated(
-    'No longer needed, the body fills the space given to SlidingUpPanel. '
-    'Will be removed in the next major version.',
+    'Remove this argument, the body now fills the space given to SlidingUpPanel. '
+    'This feature was deprecated after v2.1.0.',
   )
   final bool pageHaveAppBar;
 
   /// No longer has any effect: the [body] fills the space given to the
   /// [SlidingUpPanel], so any widget above it is already accounted for.
   @Deprecated(
-    'No longer needed, the body fills the space given to SlidingUpPanel. '
-    'Will be removed in the next major version.',
+    'Remove this argument, the body now fills the space given to SlidingUpPanel. '
+    'This feature was deprecated after v2.1.0.',
   )
   final double supplementTopSpacing;
 
@@ -205,7 +205,15 @@ class SlidingUpPanel extends StatefulWidget {
     this.onPanelOpened,
     this.onPanelClosed,
     this.parallaxEnabled = false,
+    @Deprecated(
+      'Remove this argument, the body now fills the space given to SlidingUpPanel. '
+      'This feature was deprecated after v2.1.0.',
+    )
     this.pageHaveAppBar = true,
+    @Deprecated(
+      'Remove this argument, the body now fills the space given to SlidingUpPanel. '
+      'This feature was deprecated after v2.1.0.',
+    )
     this.supplementTopSpacing = 0.0,
     this.parallaxOffset = 0.1,
     this.isDraggable = true,
