@@ -9,7 +9,7 @@ Licensing: More information can be found here: https://github.com/akshathjain/sl
 import 'dart:math';
 
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/physics.dart';
 
 enum SlideDirection { UP, DOWN }
@@ -222,10 +222,12 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
 
   bool _isPanelVisible = true;
 
+  // maybeOf: a missing Scaffold (or one built from package:flutter/material.dart,
+  // which material_ui cannot see) or a Scaffold without AppBar must not throw
   double get bodyHeight => widget.pageHaveAppBar
       ? MediaQuery.of(context).size.height -
             widget.supplementTopSpacing -
-            Scaffold.of(context).appBarMaxHeight!.toDouble()
+            (Scaffold.maybeOf(context)?.appBarMaxHeight ?? 0.0)
       : MediaQuery.of(context).size.height - widget.supplementTopSpacing;
 
   @override
@@ -312,8 +314,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                       //if a color exists, then touch events won't go through
                       color: _ac.value == 0.0
                           ? null
-                          : widget.backdropColor.withOpacity(
-                              widget.backdropOpacity * _ac.value,
+                          : widget.backdropColor.withValues(
+                              alpha: widget.backdropOpacity * _ac.value,
                             ),
                     );
                   },
