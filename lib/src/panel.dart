@@ -17,10 +17,20 @@ enum SlideDirection { UP, DOWN }
 enum PanelState { OPEN, CLOSED }
 
 class SlidingUpPanel extends StatefulWidget {
-  /// If your page have an AppBar set this parametere to true
+  /// No longer has any effect: the [body] fills the space given to the
+  /// [SlidingUpPanel], so an AppBar above it is already accounted for.
+  @Deprecated(
+    'No longer needed, the body fills the space given to SlidingUpPanel. '
+    'Will be removed in the next major version.',
+  )
   final bool pageHaveAppBar;
 
-  /// Supplementary top space on top of the body
+  /// No longer has any effect: the [body] fills the space given to the
+  /// [SlidingUpPanel], so any widget above it is already accounted for.
+  @Deprecated(
+    'No longer needed, the body fills the space given to SlidingUpPanel. '
+    'Will be removed in the next major version.',
+  )
   final double supplementTopSpacing;
 
   /// The Widget that slides into view. When the
@@ -45,7 +55,7 @@ class SlidingUpPanel extends StatefulWidget {
 
   /// The Widget that lies underneath the sliding panel.
   /// This Widget automatically sizes itself
-  /// to fill the screen.
+  /// to fill the space given to the [SlidingUpPanel].
   final Widget? body;
 
   /// Optional persistent widget that floats above the [panel] and attaches
@@ -222,14 +232,6 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
 
   bool _isPanelVisible = true;
 
-  // maybeOf: a missing Scaffold (or one built from package:flutter/material.dart,
-  // which material_ui cannot see) or a Scaffold without AppBar must not throw
-  double get bodyHeight => widget.pageHaveAppBar
-      ? MediaQuery.of(context).size.height -
-            widget.supplementTopSpacing -
-            (Scaffold.maybeOf(context)?.appBarMaxHeight ?? 0.0)
-      : MediaQuery.of(context).size.height - widget.supplementTopSpacing;
-
   @override
   void initState() {
     super.initState();
@@ -268,20 +270,26 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
           ? Alignment.bottomCenter
           : Alignment.topCenter,
       children: <Widget>[
-        //make the back widget take up the entire back side
+        //make the back widget fill the space given to the panel
         widget.body != null
-            ? AnimatedBuilder(
-                animation: _ac,
-                builder: (context, child) {
-                  return Positioned.fill(
-                    top: widget.parallaxEnabled ? _getParallax() : 0.0,
-                    child: child ?? SizedBox(),
-                  );
-                },
-                child: SizedBox(
-                  height: bodyHeight,
-                  width: double.infinity,
-                  child: widget.body,
+            ? Positioned.fill(
+                // the parallax offset moves the body out of its bounds
+                child: ClipRect(
+                  child: AnimatedBuilder(
+                    animation: _ac,
+                    builder: (context, child) {
+                      // translate instead of resizing so the body is
+                      // only repainted, not laid out, on every frame
+                      return Transform.translate(
+                        offset: Offset(
+                          0.0,
+                          widget.parallaxEnabled ? _getParallax() : 0.0,
+                        ),
+                        child: child,
+                      );
+                    },
+                    child: widget.body,
+                  ),
                 ),
               )
             : Container(),

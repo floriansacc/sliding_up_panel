@@ -65,8 +65,6 @@ class _HomePageState extends State<HomePage> {
         alignment: Alignment.topCenter,
         children: <Widget>[
           SlidingUpPanel(
-            // full screen map, there is no AppBar above the panel
-            pageHaveAppBar: false,
             maxHeight: _panelHeightOpen,
             minHeight: _panelHeightClosed,
             parallaxEnabled: true,
