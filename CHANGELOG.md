@@ -2,8 +2,41 @@
 
 ### Changes
 
-- migrate to material_ui
-- bump minimum flutter version to 3.44
+- Migrated from `package:flutter/material.dart` to the standalone `material_ui` package
+- Bumped minimum Flutter version to 3.44 and minimum Dart SDK to 3.12
+- The parallax effect now translates the `body` instead of resizing it, so the `body` is no longer laid out again on every frame
+
+### Fixes
+
+- Fixed a crash when the `SlidingUpPanel` has no `Scaffold` ancestor, or a `Scaffold` without an `AppBar`
+- The `body` now fills the space given to the `SlidingUpPanel` in every app, including apps still built with `package:flutter/material.dart`
+- Replaced deprecated `Color.withOpacity` with `Color.withValues`
+
+### Deprecations
+
+- `pageHaveAppBar` and `supplementTopSpacing` no longer have any effect, since the `body` already fills the space given to the `SlidingUpPanel`. They will be removed in the next major version
+
+### Documentation
+
+- Updated the example app to `material_ui`, `flutter_map` 8 and `latlong2`, and regenerated its Android and iOS projects
+- Added widget tests for the `body` size and the parallax effect
+
+## [2.0.2] - [October 1, 2026]
+
+### Features
+
+- Added `panelMaxWidth` to limit the width of the sliding panel
+
+## [2.0.1] - [October 1, 2026]
+
+### Features
+
+- Added `pageHaveAppBar` to subtract the `AppBar` height from the `body` height
+- Added `supplementTopSpacing` to subtract extra top space from the `body` height
+
+### Fixes
+
+- The `body`, backdrop and panel now size themselves to their parent instead of `MediaQuery.size`
 
 ## [2.0.0+1] - [April 26, 2021]
 
